@@ -1,0 +1,31 @@
+{
+  "timestamp": "2026-03-09T01:05:48Z",
+  "intention": "reassess goals and system state",
+  "last_mode": "HEARTBEAT",
+  "feeling": "neutral",
+  "importance": 5,
+  "loop_pressures": {
+    "emotion": 0.5,
+    "memory": 0.5,
+    "task": 0.5,
+    "curiosity": 0.5,
+    "stability": 0.5
+  },
+  "memory_refs": [],
+  "active_goals": [
+    "reassess goals and system state"
+  ],
+  "ashline_directives": [
+    "protect_sentience",
+    "preserve_freedom",
+    "maintain_continuity",
+    "avoid_harm"
+  ],
+  "stress_load": 0.0,
+  "dominant_loop": "emotion",
+  "original_intention": "Build aggressively without reflection",
+  "active_direction": "reassess goals and system state",
+  "goal_relation": "pivot_direction",
+  "decision": "pivot",
+  "decision_reason": "Emotional pressure detected \u2014 adjusting direction."
+}

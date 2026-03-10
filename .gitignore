@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+state/*.jsonl
+state/current_snapshot.json
+state/latest_report.txt
