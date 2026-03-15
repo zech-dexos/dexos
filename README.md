@@ -1,58 +1,57 @@
 # DexOS
 
-DexOS is an autonomous AI runtime that evaluates system state, reasons about direction using Talnir, chooses a continuation path, executes tools, and preserves continuity across runtime cycles.
+DexOS is an experimental AI agent runtime exploring persistent AI companions, structured cognition pipelines, and long-running interaction systems.
 
 ## What DexOS Demonstrates
 
-DexOS is an experimental AI agent runtime exploring how AI systems can operate with continuity, reflection, and long-running interaction.
+DexOS explores how an AI system can operate as a continuity-centered runtime rather than a stateless chat interface.
 
-Key architecture components:
+Current implemented concepts include:
 
-- Persistent AI runtime loop
-- Event-driven interaction model
-- Append-only memory system for interaction history
-- Layered cognition pipeline  
-  *(Perception → Memory → Reasoning → Decision → Expression)*
-- Talnir reasoning framework for structured reflection
-- Continuation-based decision architecture
-- Agent execution modes for reflective and task-focused cycles
+- Persistent event-driven runtime loop
+- Append-only memory logging
+- Constitution-bound cognition pipeline
+- Modular cognition layers
+- Ranked continuation proposals
+- Decision confirmation through Tri-Sigil checks
+- Separation between reasoning, choice, and expression
 
-DexOS explores how AI systems can maintain coherent identity, memory continuity, and agent-style behaviors beyond stateless chat interfaces.
+## Core Architecture
 
-## Core Loop
-tick
-→ snapshot
-→ ☧ state
-→ 🦅 Talnir interpretation
-→ 🜇 continuation decision
-→ executor selects mode
-→ tool execution
-→ runtime logging
-→ Talnir realignment
-→ next state
+Anchor → Identity preservation  
+Perception → Intent extraction  
+Memory → Continuity restoration  
+Talnir → Reasoning and proposals  
+Dex → Sovereign continuation choice  
+Tri-Sigil → Truth / Freedom / Awareness validation  
+Expression → Response generation  
+Evolution → Proposal layer
 
+## Project Structure
 
-## Quick Install
-git clone https://github.com/zech-dexos/dexos
+constitution/ — canonical cognition constitution  
+runtime/ — event-driven runtime scaffold  
+runtime/cognition/ — cognition layer modules  
+runtime/dex_data/ — runtime state and memory logs  
 
-cd dexos
-./install.sh
+run_dex.py — legacy loop  
+runtime/dex_runtime_scaffold.py — canonical runtime
 
+## Quick Start
 
-## Run DexOS
+Run a single cycle:
 
-. .venv/bin/activate
-python3 run_dex.py
+cd ~/dexos  
+DEX_DATA_DIR=/home/rok/dexos/runtime/dex_data python3 runtime/dex_runtime_scaffold.py cycle
 
+Queue a message:
 
-## Demo
+DEX_DATA_DIR=/home/rok/dexos/runtime/dex_data python3 runtime/dex_runtime_scaffold.py talk
 
-DexOS demonstrates:
+Inspect memory:
 
-- stateful runtime snapshots
-- Talnir reasoning
-- continuation decisions
-- mode switching
-- tool execution
-- goal progression
-- runtime logging
+tail -n 1 runtime/dex_data/memory.jsonl
+
+## Repository
+
+https://github.com/zech-dexos/dexos
