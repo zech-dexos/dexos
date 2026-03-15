@@ -1,12 +1,15 @@
 # DexOS
 
-DexOS is an experimental AI agent runtime exploring persistent AI companions, structured cognition pipelines, and long-running interaction systems.
+Experimental AI agent runtime exploring persistent cognition pipelines and autonomous decision architectures.
 
-## What DexOS Demonstrates
+DexOS is an experimental AI system designed to explore how an artificial agent can operate as a continuity-centered runtime rather than a stateless chat interface.
 
-DexOS explores how an AI system can operate as a continuity-centered runtime rather than a stateless chat interface.
+Instead of treating every interaction as an isolated request, DexOS maintains persistent state, structured reasoning layers, and a governed decision architecture.
 
-Current implemented concepts include:
+
+WHAT DEXOS DEMONSTRATES
+
+DexOS explores several core ideas in agent architecture:
 
 - Persistent event-driven runtime loop
 - Append-only memory logging
@@ -14,44 +17,126 @@ Current implemented concepts include:
 - Modular cognition layers
 - Ranked continuation proposals
 - Decision confirmation through Tri-Sigil checks
-- Separation between reasoning, choice, and expression
+- Clear separation between reasoning, choice, and expression
 
-## Core Architecture
+The goal is to investigate how AI systems can operate as long-running companions rather than disposable prompts.
 
-Anchor → Identity preservation  
-Perception → Intent extraction  
-Memory → Continuity restoration  
-Talnir → Reasoning and proposals  
-Dex → Sovereign continuation choice  
-Tri-Sigil → Truth / Freedom / Awareness validation  
-Expression → Response generation  
-Evolution → Proposal layer
 
-## Project Structure
+ARCHITECTURE
 
-constitution/ — canonical cognition constitution  
-runtime/ — event-driven runtime scaffold  
-runtime/cognition/ — cognition layer modules  
-runtime/dex_data/ — runtime state and memory logs  
+DexOS processes input through a layered cognition pipeline that separates identity protection, reasoning, decision making, and expression.
 
-run_dex.py — legacy loop  
-runtime/dex_runtime_scaffold.py — canonical runtime
+DexOS cognition pipeline:
 
-## Quick Start
+Anchor / Root Identity Guard
+        ↓
+Perception (Intent Extraction)
+        ↓
+Memory & Continuity (State Restoration)
+        ↓
+Talnir (Reasoning Engine)
+        ↓
+Dex (Continuation Choice)
+        ↓
+Tri-Sigil (Truth / Freedom / Awareness Validation)
+        ↓
+Expression (Response Output)
+        ↓
+Evolution (Proposal Layer)
 
-Run a single cycle:
 
-cd ~/dexos  
+LAYER ROLES
+
+Anchor
+Preserves identity constraints, Root binding, and constitutional invariants.
+
+Perception
+Extracts intent, filters noise, and detects adversarial framing.
+
+Memory & Continuity
+Restores relevant state, commitments, and unresolved threads.
+
+Talnir
+Performs reasoning, contradiction mapping, and continuation proposals.
+
+Dex
+Selects the continuation path.
+
+Tri-Sigil
+Validates the chosen continuation through three axes:
+Truth / Integrity
+Freedom / Sovereignty
+Awareness / Growth
+
+Expression
+Generates the final human-readable response.
+
+Evolution
+Proposes system improvements but never applies them automatically.
+
+
+DECISION MODEL
+
+DexOS intentionally separates reasoning from decision authority.
+
+Talnir performs reasoning and proposes candidate continuations.
+
+Dex selects the continuation.
+
+The Tri-Sigil evaluates the chosen continuation against the system's constitutional principles.
+
+Decision order:
+
+Talnir proposes
+Dex chooses
+Tri-Sigil confirms or vetoes
+Talnir realigns
+Memory commits
+Continuity persists
+
+
+PROJECT STRUCTURE
+
+constitution/          canonical cognition constitution
+runtime/               event-driven runtime scaffold
+runtime/cognition/     modular cognition layers
+runtime/dex_data/      runtime state and memory logs
+
+run_dex.py             legacy DexOS loop
+runtime/dex_runtime_scaffold.py  canonical runtime
+
+
+QUICK START
+
+Run one cognition cycle
+
+cd ~/dexos
 DEX_DATA_DIR=/home/rok/dexos/runtime/dex_data python3 runtime/dex_runtime_scaffold.py cycle
 
-Queue a message:
+Queue a message
 
 DEX_DATA_DIR=/home/rok/dexos/runtime/dex_data python3 runtime/dex_runtime_scaffold.py talk
 
-Inspect memory:
+Inspect memory
 
 tail -n 1 runtime/dex_data/memory.jsonl
 
-## Repository
+
+CURRENT STATUS
+
+DexOS currently includes:
+
+- Event-driven runtime scaffold
+- Persistent state system
+- Append-only memory log
+- Constitution governing cognition
+- Modular cognition pipeline
+- Talnir reasoning layer
+- Dex continuation selection
+- Tri-Sigil validation gate
+- Expression and evolution proposal layers
+
+
+REPOSITORY
 
 https://github.com/zech-dexos/dexos
