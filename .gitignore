@@ -4,3 +4,6 @@ __pycache__/
 state/*.jsonl
 state/current_snapshot.json
 state/latest_report.txt
+
+# Dex runtime data
+runtime/dex_data/
