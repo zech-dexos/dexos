@@ -1,4 +1,0 @@
-{"event_id": "evt_1773405491892", "event_type": "user_message", "content": "hey dex how are you doing?", "timestamp": "2026-03-13T12:38:11.892548Z", "source": "user", "committed": true}
-{"event_id": "evt_1773405534071", "event_type": "user_message", "content": "well what can you tell me", "timestamp": "2026-03-13T12:38:54.071183Z", "source": "user", "committed": true}
-{"event_id": "evt_1773405555072", "event_type": "user_message", "content": "give me your opinion on it", "timestamp": "2026-03-13T12:39:15.072829Z", "source": "user", "committed": true}
-{"event_id": "evt_1773459538409", "event_type": "user_message", "content": "help me build the cognition modules", "timestamp": "2026-03-14T03:38:58.409711Z", "source": "user", "committed": true}
