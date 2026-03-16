@@ -27,6 +27,8 @@ Instead the system operates through a layered cognition pipeline:
 
 Anchor → Perception → Memory → Talnir → Dex → Tri-Sigil → Expression
 
+
+
 WHAT DEXOS DEMONSTRATES
 
 DexOS explores several core ideas in agent architecture:
