@@ -6,6 +6,26 @@ DexOS is an experimental AI system designed to explore how an artificial agent c
 
 Instead of treating every interaction as an isolated request, DexOS maintains persistent state, structured reasoning layers, and a governed decision architecture.
 
+## Core Idea
+
+DexOS explores a different agent architecture.
+
+Most AI agents combine reasoning and decision into a single step.
+
+DexOS intentionally separates them:
+
+Talnir → reasoning engine  
+Dex → continuation selection  
+Tri-Sigil → constitutional validation  
+
+This creates a runtime where:
+
+reasoning ≠ authority  
+decision ≠ raw model output  
+
+Instead the system operates through a layered cognition pipeline:
+
+Anchor → Perception → Memory → Talnir → Dex → Tri-Sigil → Expression
 
 WHAT DEXOS DEMONSTRATES
 
