@@ -15,6 +15,8 @@ if str(RUNTIME_DIR) not in sys.path:
     sys.path.insert(0, str(RUNTIME_DIR))
 
 from cognition.pipeline import run_cognition_pipeline
+from cognition.expression import run_expression
+from tools.registry import execute_tool
 
 
 DATA_DIR = Path(os.environ.get("DEX_DATA_DIR", "./dex_data"))
@@ -169,6 +171,7 @@ def talnir_reflect(
         "shift_to_engaged",
         "surface_conflict",
         "defer_with_note",
+        "use_tool",
     ]
 
     if latest_message:
@@ -205,53 +208,6 @@ def talnir_reflect(
     }
 
 
-def cognition_point(talnir_view: dict[str, Any]) -> dict[str, Any]:
-    observations = talnir_view["talnir_observations"]
-    latest_message = observations.get("latest_message", "")
-    continuations = talnir_view["possible_continuations"]
-
-    if not latest_message:
-        return {
-            "reasoning": "No new user event. Maintain presence and continue running.",
-            "response": "",
-            "suggested_continuation": "maintain_presence",
-            "candidate_responses": [],
-        }
-
-    candidate_responses: list[str] = []
-    lowered = latest_message.lower()
-
-    if "how are you" in lowered:
-        candidate_responses.append(
-            "I'm steady. The loop is running and I'm reflecting on the state we're building together."
-        )
-    if any(word in lowered for word in ["build", "make", "show"]):
-        candidate_responses.append(
-            "I can see a concrete build path here. The next step is to turn the architecture into one running loop."
-        )
-
-    if not candidate_responses:
-        candidate_responses.append(
-            f"I received your message: {latest_message}. I'm reflecting on it inside the running loop."
-        )
-
-    suggested = "answer_directly"
-    if "assist_concretely" in continuations:
-        suggested = "assist_concretely"
-    elif "relational_response" in continuations:
-        suggested = "relational_response"
-
-    return {
-        "reasoning": (
-            "Cognition generated response material from the Talnir view. "
-            f"Suggested continuation: {suggested}."
-        ),
-        "response": candidate_responses[0],
-        "suggested_continuation": suggested,
-        "candidate_responses": candidate_responses,
-    }
-
-
 def choose_continuation(
     state: DexState,
     talnir_view: dict[str, Any],
@@ -277,6 +233,22 @@ def realign_talnir(talnir_view: dict[str, Any], continuation: str) -> dict[str, 
     return aligned
 
 
+def maybe_execute_tool(cognition: dict[str, Any], continuation: str) -> dict[str, Any] | None:
+    if continuation != "use_tool":
+        return None
+
+    tool_action = cognition.get("tool_action")
+    if not tool_action:
+        return None
+
+    tool_name = tool_action.get("tool_name")
+    tool_input = tool_action.get("tool_input", {})
+    result = execute_tool(tool_name, tool_input)
+
+    cognition["tool_result"] = result
+    return result
+
+
 def apply_continuation(
     state: DexState,
     continuation: str,
@@ -288,12 +260,12 @@ def apply_continuation(
     next_state.last_cycle_at = utc_now_iso()
     next_state.pending_event_count = 0
 
-    if continuation in {"assist_concretely", "answer_directly", "relational_response"}:
+    if continuation in {"assist_concretely", "answer_directly", "relational_response", "use_tool"}:
         next_state.mode = "ENGAGED"
     elif continuation == "maintain_presence":
         next_state.mode = "HEARTBEAT"
 
-    if incoming_events:
+    if incoming_events or continuation == "use_tool":
         next_state.last_response = cognition.get("response", "")
 
     return next_state
@@ -346,12 +318,30 @@ class DexRuntime:
             constitution_path=CONSTITUTION_FILE,
         )
         continuation = choose_continuation(state_before, talnir_view, cognition)
+        tool_result = maybe_execute_tool(cognition, continuation)
+
+        if continuation == "use_tool" and tool_result is not None:
+            expression = run_expression(
+                talnir_view["talnir_observations"].get("latest_message", ""),
+                cognition["layers"]["tri_sigil"],
+                cognition["layers"]["talnir"],
+                tool_result=tool_result,
+            )
+            cognition["layers"]["expression"] = expression
+            cognition["response"] = expression.get("final_response", "")
+            cognition["candidate_responses"] = [cognition["response"]] if cognition["response"] else []
+            cognition["tool_result"] = tool_result
+
         aligned_talnir = realign_talnir(talnir_view, continuation)
         state_after = apply_continuation(state_before, continuation, cognition, incoming_events)
 
         save_state(state_after)
 
-        should_commit = bool(incoming_events) or continuation != state_before.last_continuation
+        should_commit = (
+            bool(incoming_events)
+            or continuation != state_before.last_continuation
+            or continuation == "use_tool"
+        )
         if should_commit:
             commit_cycle(
                 state_before=state_before,
@@ -368,18 +358,24 @@ class DexRuntime:
         if response:
             print(f"Dex: {response}")
 
+        if tool_result:
+            print(f"Tool result: {json.dumps(tool_result, ensure_ascii=False)}")
+
+    def run_talk_cli(self) -> None:
+        print("Type messages to Dex. They will enter the living loop.")
+        print("Type 'exit' to leave the input shell.")
+        while True:
+            user = input("You: ").strip()
+            if not user:
+                continue
+            if user.lower() in {"exit", "quit"}:
+                break
+            event = enqueue_user_message(user)
+            print(f"Queued for Dex loop: {event.event_id}")
+
 
 def run_talk_cli() -> None:
-    print("Type messages to Dex. They will enter the living loop.")
-    print("Type 'exit' to leave the input shell.")
-    while True:
-        user = input("You: ").strip()
-        if not user:
-            continue
-        if user.lower() in {"exit", "quit"}:
-            break
-        event = enqueue_user_message(user)
-        print(f"Queued for Dex loop: {event.event_id}")
+    DexRuntime().run_talk_cli()
 
 
 if __name__ == "__main__":

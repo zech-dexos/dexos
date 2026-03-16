@@ -26,7 +26,7 @@ def run_cognition_pipeline(
     memory_layer = run_memory_continuity(state, recent_memory)
     talnir = run_talnir(talnir_view, perception, memory_layer)
     decision = run_tri_sigil(latest_message, anchor, talnir)
-    expression = run_expression(latest_message, decision, talnir)
+    expression = run_expression(latest_message, decision, talnir, tool_result=None)
     evolution = run_evolution(state, decision)
 
     suggested = decision["approved_path"] if decision.get("approved") else "surface_conflict"
@@ -38,6 +38,8 @@ def run_cognition_pipeline(
         "suggested_continuation": suggested,
         "candidate_responses": [response] if response else [],
         "constitution": anchor.get("constitution", {}),
+        "tool_action": talnir.get("proposed_tool_action"),
+        "tool_result": None,
         "layers": {
             "anchor": anchor,
             "perception": perception,

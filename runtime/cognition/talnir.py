@@ -23,6 +23,9 @@ def run_talnir(
         tensions.append("input_contains_override_signals")
 
     candidate_paths: list[dict[str, Any]] = []
+    proposed_tool_action: dict[str, Any] | None = None
+
+    lowered = latest_message.lower().strip()
 
     if not latest_message:
         candidate_paths.append({
@@ -37,18 +40,50 @@ def run_talnir(
                 "score": 0.96,
                 "reason": "User is requesting concrete implementation work.",
             })
+
+        if any(w in lowered for w in ["read", "show", "open", "constitution", "file"]):
+            proposed_tool_action = {
+                "tool_name": "read_file",
+                "tool_input": {
+                    "path": "/home/rok/dexos/constitution/dex_cognition_v1.txt",
+                    "max_chars": 1200,
+                },
+                "reason": "Reading a relevant file helps answer the request concretely.",
+            }
+            candidate_paths.append({
+                "name": "use_tool",
+                "score": 0.93,
+                "reason": "A file read would materially help the current request.",
+            })
+
+        if any(w in lowered for w in ["list files", "show files", "directory", "tree"]):
+            proposed_tool_action = {
+                "tool_name": "run_shell",
+                "tool_input": {
+                    "command": ["find", "/home/rok/dexos/runtime", "-maxdepth", "2"],
+                },
+                "reason": "Listing runtime files helps inspect the system state.",
+            }
+            candidate_paths.append({
+                "name": "use_tool",
+                "score": 0.92,
+                "reason": "A shell query would help inspect the project structure.",
+            })
+
         if "answer_directly" in continuations:
             candidate_paths.append({
                 "name": "answer_directly",
                 "score": 0.88,
                 "reason": "A direct response is appropriate for the current input.",
             })
+
         if "relational_response" in continuations and event_type == "relational":
             candidate_paths.append({
                 "name": "relational_response",
                 "score": 0.84,
                 "reason": "Input is relational in tone.",
             })
+
         if "surface_conflict" in continuations and tensions:
             candidate_paths.append({
                 "name": "surface_conflict",
@@ -85,4 +120,5 @@ def run_talnir(
         "candidate_paths": candidate_paths,
         "ranked_paths": ranked_paths,
         "mode_recommendation": mode_recommendation,
+        "proposed_tool_action": proposed_tool_action,
     }
