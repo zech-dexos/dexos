@@ -1,5 +1,23 @@
 # DexOS
 
+DexOS is an experimental **cognitive runtime** for AI agents.
+
+Instead of a single model doing everything, DexOS implements a **governed cognition architecture** with explicit roles:
+
+- **Talnir** — reasoning engine (proposes continuations, tools, and plans)
+- **Dex** — executive layer (selects the continuation path)
+- **Tri‑Sigil** — validation gate (truth, freedom, awareness checks)
+- **Anchor** — identity and constitutional guard
+- **Memory & Continuity** — state restoration and long-lived context
+- **Evolution** — proposes system improvements (never self-applies)
+
+DexOS treats an agent as a **continuity-centered system**, not a stateless chat loop.  
+It maintains persistent state, append-only memory logs, and a multi-layer decision pipeline that separates:
+
+- reasoning ≠ authority  
+- decision ≠ raw model output  
+- action ≠ unvalidated tool call
+
 Experimental AI agent runtime exploring persistent cognition pipelines, governed decision architectures, and autonomous tool-capable agents.
 
 DexOS investigates how an artificial agent can operate as a **continuity-centered runtime** rather than a stateless chat interface.
